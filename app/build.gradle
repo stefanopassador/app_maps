@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Python_966'
             keyPassword 'antonio'
-            storeFile file('C:/Users/Antonio/keyperapk.jks')
+
             storePassword 'antonio'
         }
     }
@@ -23,7 +23,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            proguardFile 'C:/Users/Antonio/keyperapk.jks'
+
         }
     }
 }

@@ -71,4 +71,4 @@ public class SecondaActivity extends FragmentActivity implements OnMapReadyCallb
         map.setMyLocationEnabled(true);
     }
 
-    }
+}

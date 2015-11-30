@@ -3,6 +3,7 @@ package com.example.antonio.quichica;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +28,15 @@ import org.json.JSONObject;
  * A placeholder fragment containing a simple view.
  */
 public class MainFragment extends Fragment {
+    private static final String TAG = "MainFragment";
     private TextView mTextDetails;
-    private  CallbackManager mCallbackManager;
+    private CallbackManager mCallbackManager;
 
-    private FacebookCallback<LoginResult> mCallback= new FacebookCallback<LoginResult>() {
+    private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
 
         @Override
         public void onSuccess(LoginResult loginResult) {
-
+            Log.d(TAG, "onSuccess Facebook Login");
 
             AccessToken accessToken = loginResult.getAccessToken();
             final Profile profile = Profile.getCurrentProfile();
@@ -50,7 +52,8 @@ public class MainFragment extends Fragment {
                                 String gender = object.optString("gender");
 
                                 String location = object.optJSONObject("location").optString("name");
-                                /* mTextDetails.setText("Gli eventi: " )/* "\n" + gender + "\n Sei di: \n" + location)*/;
+                                /* mTextDetails.setText("Gli eventi: " )/* "\n" + gender + "\n Sei di: \n" + location)*/
+                                ;
 
                             }
                         });
@@ -98,28 +101,34 @@ public class MainFragment extends Fragment {
             request.setParameters(parameters);
             request.executeAsync();*/
 
+            // definisco l'intenzione
+            Intent openPage1 = new Intent(getActivity().getApplicationContext(), SecondaActivity.class);
+            // passo all'attivazione dell'activity Pagina.java
+            startActivity(openPage1);
         }
 
         @Override
         public void onCancel() {
-
+            Log.d(TAG, "onCancel Facebook Login");
         }
 
         @Override
-        public void onError (FacebookException e){
-
-            }
+        public void onError(FacebookException e) {
+            Log.d(TAG, "onError Facebook Login");
+            Log.e(TAG, e.toString());
+        }
     };
 
     public MainFragment() {
     }
 
-        @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,16 +139,15 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
 
-        loginButton.setReadPermissions("user_friends","user_location", "public_profile","user_likes","email","user_events",  "user_birthday");
+        loginButton.setReadPermissions("user_friends", "user_location", "public_profile", "user_likes", "email", "user_events", "user_birthday");
         loginButton.setFragment(this);
         loginButton.registerCallback(mCallbackManager, mCallback);
         mTextDetails = (TextView) view.findViewById(R.id.text_details);
-        Button button1 = (Button)view.findViewById(R.id.login_button);
+        Button button1 = (Button) view.findViewById(R.id.login_button);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(

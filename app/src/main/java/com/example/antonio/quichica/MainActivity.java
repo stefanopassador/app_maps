@@ -18,10 +18,7 @@ public class MainActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // definisco l'intenzione
-                Intent openPage1 = new Intent(MainActivity.this, SecondaActivity.class);
-                // passo all'attivazione dell'activity Pagina.java
-                startActivity(openPage1);
+
             }
         });
     }
